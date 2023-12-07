@@ -1,0 +1,1 @@
+This is the 0x01. Lockboxes Project that will basically check if you can unlock all the boxes given a set of keys. Each box has a number, and the keys in the boxes can be used to unlock other boxes. The goal is to determine if, starting from the first box (which is assumed to be unlocked), you can use the keys in the boxes to unlock all the other boxes.
