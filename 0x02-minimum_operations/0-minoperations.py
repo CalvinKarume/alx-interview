@@ -9,9 +9,35 @@ def minOperations(n):
 	 operations needed (Copy All and Paste) to achieve
 	 exactly n 'H' characters. Returns 0 if impossible
 	"""
-    if n <= 1:
+pasted_chars = 1
+clipboard = 0
+counter = 0
+
+while pasted_chars < n:
+    if clipboard == 0:
+        clipboard = pasted_chars
+        counter += 1
+
+    if pasted_chars == 1:
+        pasted_chars += clipboard
+        counter += 1
+        continue
+
+    remaining = n - pasted_chars
+
+    if remaining < clipboard:
         return 0
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return minOperations(n // i) + i
-    return n
+
+    if remaining % pasted_chars != 0:
+        pasted_chars += clipboard
+        counter += 1
+    else:
+        clipboard = pasted_chars
+        pasted_chars += clipboard
+        counter += 2
+
+if pasted_chars == n:
+    return counter
+else:
+    return 0
+
