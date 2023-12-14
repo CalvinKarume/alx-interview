@@ -11,8 +11,7 @@ def minOperations(n):
 	"""
     if n <= 1:
         return 0
-
-    for x in range(2, n + 1):
-        if n % x == 0:
-            return minOperations(int(n / x)) + x
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return minOperations(n // i) + i
     return n
