@@ -4,10 +4,10 @@ UTF-8 Validation
 """
 
 def validUTF8(data):
-"""
- Determines if a given data set represents a valid UTF-8 encoding
-"""
-   # Initialize the count of expected continuation bytes
+    """
+    Determines if a given data set represents a valid UTF-8 encoding.
+    """
+    # Initialize the count of expected continuation bytes
     remaining_bytes = 0
 
     for byte in data:
@@ -28,3 +28,4 @@ def validUTF8(data):
             remaining_bytes -= 1
 
     return remaining_bytes == 0
+
