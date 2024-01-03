@@ -27,5 +27,5 @@ def validUTF8(data):
                 return False
             remaining_bytes -= 1
 
+
     return remaining_bytes == 0
-#dd
