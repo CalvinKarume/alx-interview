@@ -1,55 +1,50 @@
 #!/usr/bin/python3
-"""
-N queens puzzle
-"""
-
+"""Solving the Queens Dilemma"""
 import sys
 
 
-def is_safe(board, row, col, N):
-    """
-    Check if it's safe to place a queen at board[row][col]
-    """
+def show_queen_positions(queen_arrangements):
+    """Displays the coordinates of the queens"""
+    for arrangement in queen_arrangements:
+        print(arrangement)
+
+
+def is_safe_placement(chessboard, row, col):
+    """Checks if placing a queen at a given position is safe"""
+    board_size = len(chessboard)
+
     for i in range(row):
-        if board[i][col] == 1 or board[i][col - (row - i)] == 1 or board[i][col + (row - i)] == 1:
+        if chessboard[i][col] == 1 or \
+           (0 <= col - row + i < board_size and chessboard[i][col - row + i] == 1) or \
+           (0 <= col + row - i < board_size and chessboard[i][col + row - i] == 1):
             return False
+
     return True
 
 
-def solve_queens(board, row, N, solutions):
-    """
-    Solve N queens puzzle using backtracking
-    """
-    if row == N:
-        queens = [[r, c] for r, c in enumerate(board)]
+def explore_board(chessboard, row, solutions):
+    """Solves the problem using Backtracking"""
+    board_size = len(chessboard)
+
+    if row == board_size:
+        queens = [[i, j] for i in range(board_size)
+                  for j in range(board_size) if chessboard[i][j] == 1]
         solutions.append(queens)
         return
 
-    for col in range(N):
-        if is_safe(board, row, col, N):
-            board[row][col] = 1
-            solve_queens(board, row + 1, N, solutions)
-            board[row][col] = 0
+    for col in range(board_size):
+        if is_safe_placement(chessboard, row, col):
+            chessboard[row][col] = 1
+            explore_board(chessboard, row + 1, solutions)
+            chessboard[row][col] = 0
 
 
-def nqueens(N):
-    """
-    Main function to solve N queens puzzle
-    """
-    if not isinstance(N, int):
-        print("Error: N must be a number")
-        sys.exit(1)
-
-    if N < 4:
-        print("Error: N must be at least 4")
-        sys.exit(1)
-
-    board = [[0] * N for _ in range(N)]
+def solve_queens_problem(board_size):
+    """Finds solutions to the Queens Dilemma"""
     solutions = []
-    solve_queens(board, 0, N, solutions)
-
-    for solution in solutions:
-        print(solution)
+    chessboard = [[0 for _ in range(board_size)] for _ in range(board_size)]
+    explore_board(chessboard, 0, solutions)
+    return solutions
 
 
 if __name__ == "__main__":
@@ -58,9 +53,16 @@ if __name__ == "__main__":
         sys.exit(1)
 
     try:
-        N = int(sys.argv[1])
-        nqueens(N)
+        board_size = int(sys.argv[1])
     except ValueError:
-        print("Error: N must be a number")
+        print("N must be a number")
         sys.exit(1)
+
+    if board_size < 4:
+        print("N must be at least 4")
+        sys.exit(1)
+
+    queen_solutions = solve_queens_problem(board_size)
+    show_queen_positions(queen_solutions)
+
 
