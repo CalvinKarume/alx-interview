@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """
- N queens puzzle
+N queens puzzle
 """
 
 import sys
+
 
 def is_safe(board, row, col, N):
     """
@@ -13,6 +14,7 @@ def is_safe(board, row, col, N):
         if board[i] == col or board[i] - i == col - row or board[i] + i == col + row:
             return False
     return True
+
 
 def solve_queens(board, row, N):
     """
@@ -26,6 +28,7 @@ def solve_queens(board, row, N):
         if is_safe(board, row, col, N):
             board[row] = col
             solve_queens(board, row + 1, N)
+
 
 def nqueens(N):
     """
@@ -42,6 +45,7 @@ def nqueens(N):
     board = [-1] * N
     solve_queens(board, 0, N)
 
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: nqueens N")
@@ -53,4 +57,5 @@ if __name__ == "__main__":
     except ValueError:
         print("Error: N must be a number")
         sys.exit(1)
+
 
